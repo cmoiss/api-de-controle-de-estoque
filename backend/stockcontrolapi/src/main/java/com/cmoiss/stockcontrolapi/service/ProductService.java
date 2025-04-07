@@ -14,7 +14,7 @@ public class ProductService {
 
     public Product save(Product product) {
         // Verifica se já existe um produto com o mesmo nome
-        if (repository.existsByNome(product.getName())) {
+        if (repository.existsByName(product.getName())) {
             throw new IllegalArgumentException("Já existe um produto com este nome.");
         }
 

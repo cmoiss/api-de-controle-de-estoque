@@ -48,7 +48,7 @@ class ProductServiceTest {
     @MethodSource("productProvider")
     void testaSeExcecaoEstaSendoLancadaAoTentarSalvarProdutoDuplicado(Product product) {
         // Configura o mock para retornar true quando verificar se o nome existe
-        when(repository.existsByNome(product.getName())).thenReturn(true);
+        when(repository.existsByName(product.getName())).thenReturn(true);
 
         // Verifica se a exceção é lançada
         assertThrows(IllegalArgumentException.class, () -> {
