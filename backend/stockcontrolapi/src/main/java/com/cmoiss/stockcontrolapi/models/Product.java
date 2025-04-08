@@ -14,17 +14,18 @@ import org.hibernate.annotations.Cascade;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long Id;
+    private Long Id;
 
     @Setter
     @NonNull
     @Column(nullable = false, unique = true)
-    String name;
+    private String name;
 
     @Setter
     @NonNull
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     @JoinColumn(name = "category_id", nullable = false)
-    Category category;
+    private Category category;
+
 }
