@@ -2,6 +2,7 @@ package com.cmoiss.stockcontrolapi.service;
 
 import com.cmoiss.stockcontrolapi.models.Category;
 import com.cmoiss.stockcontrolapi.models.Product;
+import com.cmoiss.stockcontrolapi.models.VolumeVariation;
 import com.cmoiss.stockcontrolapi.repository.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +11,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,10 +29,36 @@ class ProductServiceTest {
 
     static Stream<Product> productProvider() {
         return Stream.of(
-                new Product("Coca cola", new Category("Refrigerante")),
-                new Product("Vinho tinto", new Category("Vinho")),
-                new Product("Heineken", new Category("Cerveja"))
+                new Product("Coca cola", new Category("Refrigerante"), List.of(
+                        new VolumeVariation(),
+                        new VolumeVariation()
+                )),
+                new Product("Vinho tinto", new Category("Vinho"), List.of(
+                        new VolumeVariation(),
+                        new VolumeVariation()
+                )),
+                new Product("Heineken", new Category("Cerveja"), List.of(
+                        new VolumeVariation(),
+                        new VolumeVariation()
+                ))
         );
+    }
+
+    @Test
+    void testaPersistenciaUnica() {
+        Product product = new Product("Coca cola", new Category("Refrigerante"), List.of(
+                new VolumeVariation(),
+                new VolumeVariation()
+        ));
+
+        when(repository.save(product)).thenReturn(product);
+
+        Product savedProduct = service.save(product);
+
+        verify(repository, times(1)).save(product);
+
+        assertNotNull(savedProduct);
+        assertEquals(product, savedProduct);
     }
 
     @ParameterizedTest

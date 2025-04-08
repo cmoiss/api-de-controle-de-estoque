@@ -4,9 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
-@Getter
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.PERSIST;
+
 @NoArgsConstructor
-@RequiredArgsConstructor
+@Getter
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -17,15 +21,24 @@ public class Product {
     private Long Id;
 
     @Setter
-    @NonNull
     @Column(nullable = false, unique = true)
     private String name;
 
     @Setter
-    @NonNull
     @ManyToOne
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
+    @Cascade(PERSIST)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @OneToMany
+    @Cascade(PERSIST)
+    @JoinColumn(name = "product_id", nullable = false)
+    private List<VolumeVariation> volumeVariation = new ArrayList<>();
+//    private UnitPerPackVariation unitPerPackVariation;
+
+    public Product(String name, Category category, List<VolumeVariation> volumeVariation) {
+        this.name = name;
+        this.category = category;
+        this.volumeVariation = volumeVariation;
+    }
 }
