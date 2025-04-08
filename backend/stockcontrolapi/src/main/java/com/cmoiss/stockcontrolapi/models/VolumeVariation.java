@@ -21,8 +21,9 @@ public class VolumeVariation {
     @JoinColumn(name = "volume_value", nullable = false)
     private Volumes volumeValue;
 
-//
-//    @NonNull
-//    @Column(nullable = false)
-//    private BigDecimal price;
+
+    @NonNull
+    @Embedded
+    @Column(nullable = false)
+    private Price price;
 }

@@ -1,11 +1,8 @@
 package com.cmoiss.stockcontrolapi.service;
 
-import com.cmoiss.stockcontrolapi.models.Category;
-import com.cmoiss.stockcontrolapi.models.Product;
-import com.cmoiss.stockcontrolapi.models.Volumes;
-import com.cmoiss.stockcontrolapi.models.VolumeVariation;
+import com.cmoiss.stockcontrolapi.models.*;
 import com.cmoiss.stockcontrolapi.repository.ProductRepository;
-import com.cmoiss.stockcontrolapi.repository.VolumesRepository;
+import lombok.NonNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,25 +32,25 @@ class ProductServiceTest {
     static Stream<Product> productProvider() {
         return Stream.of(
                 new Product("Coca cola", new Category("Refrigerante"), List.of(
-                        new VolumeVariation(),
-                        new VolumeVariation()
+                        new VolumeVariation(new Volumes(350.0), new Price(new BigDecimal("6.99"))),
+                        new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("8.99")))
                 )),
                 new Product("Vinho tinto", new Category("Vinho"), List.of(
-                        new VolumeVariation(),
-                        new VolumeVariation()
+                        new VolumeVariation(new Volumes(750.0), new Price(new BigDecimal("29.99"))),
+                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("39.99")))
                 )),
                 new Product("Heineken", new Category("Cerveja"), List.of(
-                        new VolumeVariation(),
-                        new VolumeVariation()
+                        new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("11.99"))),
+                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")))
                 ))
         );
     }
 
     @Test
-    void testaPersistenciaUnica() {
+    void testaPersistenciaUnicoValor() {
         Product product = new Product("Coca cola", new Category("Refrigerante"), List.of(
-                new VolumeVariation(),
-                new VolumeVariation()
+                new VolumeVariation(new Volumes(350.0), new Price(new BigDecimal("6.99"))),
+                new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("8.99")))
         ));
 
         when(volumesService.findOrCreateNewVolume(product)).thenReturn(product);
@@ -71,13 +69,13 @@ class ProductServiceTest {
         Volumes v = new Volumes(500.0);
 
         Product p1 = new Product("Coca cola", new Category("Refrigerante"), List.of(
-                new VolumeVariation(new Volumes(350.0)),
-                new VolumeVariation(v)
+                new VolumeVariation(new Volumes(350.0), new Price(new BigDecimal("6.99"))),
+                new VolumeVariation(v, new Price(new BigDecimal("8.99")))
         ));
 
         Product p2 = new Product("Heineken", new Category("Cerveja"), List.of(
-                new VolumeVariation(v),
-                new VolumeVariation(new Volumes(1000.0))
+                new VolumeVariation(v, new Price(new BigDecimal("11.99"))),
+                new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")))
         ));
 
         when(volumesService.findOrCreateNewVolume(p1)).thenReturn(p1);
@@ -91,8 +89,8 @@ class ProductServiceTest {
         verify(repository, times(1)).save(p1);
         verify(repository, times(1)).save(p2);
 
-        VolumeVariation product1VariationWith500 = p1.getVolumeVariation().getLast();
-        VolumeVariation product2VariationWith500 = p2.getVolumeVariation().getFirst();
+        Volumes product1VariationWith500 = p1.getVolumeVariation().getLast().getVolumeValue();
+        Volumes product2VariationWith500 = p2.getVolumeVariation().getFirst().getVolumeValue();
         
         assertEquals(product1VariationWith500, product2VariationWith500);
     }
