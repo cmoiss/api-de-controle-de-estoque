@@ -18,7 +18,7 @@ public class VolumesService {
         product.getVolumeVariation()
                 .forEach(volumeVariation -> {
                             Volumes volume = volumeVariation.getVolumeValue();
-                            Optional<Volumes> existingVolume = volumesRepository.findByValue(volume.getValue());
+                            Optional<Volumes> existingVolume = volumesRepository.findByVolume(volume.getVolume());
 
                             existingVolume.ifPresentOrElse(
                                     // Se existir, atualiza o volumeVariation com o existente

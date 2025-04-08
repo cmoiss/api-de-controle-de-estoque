@@ -5,6 +5,7 @@ import lombok.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+@NoArgsConstructor
 @RequiredArgsConstructor
 @Getter
 @ToString
@@ -16,5 +17,5 @@ public class Volumes {
     private Long id;
 
     @NonNull
-    private Double value;
+    private Double volume;
 }

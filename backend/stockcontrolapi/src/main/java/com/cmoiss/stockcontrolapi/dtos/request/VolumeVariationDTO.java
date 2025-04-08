@@ -11,6 +11,6 @@ import java.math.BigDecimal;
 @Setter
 public class VolumeVariationDTO {
     private Double volume;  // Valor direto (não objeto Volumes)
-    private BigDecimal price; // Valor direto (não objeto Price)
+    private Double price; // Valor direto (não objeto Price)
     private Integer quantity;
 }

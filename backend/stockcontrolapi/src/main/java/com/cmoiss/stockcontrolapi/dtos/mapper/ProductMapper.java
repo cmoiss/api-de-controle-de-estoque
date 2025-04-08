@@ -3,10 +3,12 @@ package com.cmoiss.stockcontrolapi.dtos.mapper;
 import com.cmoiss.stockcontrolapi.dtos.request.ProductDTO;
 import com.cmoiss.stockcontrolapi.dtos.request.VolumeVariationDTO;
 import com.cmoiss.stockcontrolapi.models.*;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Component
 public class ProductMapper {
 
     public Product toEntity(ProductDTO dto) {

@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface VolumesRepository extends JpaRepository<Volumes, Long> {
 
-    Optional<Volumes> findByValue(@NonNull Double value);
+    Optional<Volumes> findByVolume(@NonNull Double volume);
 }
