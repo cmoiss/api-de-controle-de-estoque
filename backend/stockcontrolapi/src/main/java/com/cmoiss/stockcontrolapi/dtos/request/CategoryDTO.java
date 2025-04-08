@@ -1,4 +1,4 @@
-package com.cmoiss.stockcontrolapi.dtos;
+package com.cmoiss.stockcontrolapi.dtos.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
