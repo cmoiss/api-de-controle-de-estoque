@@ -1,15 +1,13 @@
 package com.cmoiss.stockcontrolapi.models;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-
-import java.math.BigDecimal;
+import lombok.*;
 
 @NoArgsConstructor
+@RequiredArgsConstructor
+@Getter
 @ToString
+@EqualsAndHashCode
 @Entity
 @Table(name = "volume_variations")
 public class VolumeVariation {
@@ -17,9 +15,12 @@ public class VolumeVariation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-//    @NonNull
-//    @Column(name = "value", nullable = false)
-//    private Volumes volume;
+    @NonNull
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "volume_value", nullable = false)
+    private Volumes volumeValue;
+
 //
 //    @NonNull
 //    @Column(nullable = false)
