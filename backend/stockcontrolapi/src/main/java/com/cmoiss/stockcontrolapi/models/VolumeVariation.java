@@ -21,9 +21,12 @@ public class VolumeVariation {
     @JoinColumn(name = "volume_value", nullable = false)
     private Volumes volumeValue;
 
-
     @NonNull
     @Embedded
     @Column(nullable = false)
     private Price price;
+
+    @NonNull
+    @Column(name = "quantity_in_internal_stock" , nullable = false)
+    private Integer quantityInInventory;
 }
