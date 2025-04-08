@@ -19,13 +19,13 @@ public class ProductController {
         return service.getAll();
     }
 
-    @PostMapping
-    public Product save(@RequestBody Product product) {
-        return service.save(product);
-    }
-
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         service.deleteById(id);
+    }
+
+    @PostMapping("/save")
+    public Product save(@RequestBody Product product) {
+        return service.save(product);
     }
 }
