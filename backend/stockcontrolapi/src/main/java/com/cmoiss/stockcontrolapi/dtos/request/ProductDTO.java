@@ -11,12 +11,12 @@ import java.util.List;
 public class ProductDTO {
     @Getter
     private String name;
-    private CategoryDTO category;
+    private String category;
 
     @Getter
     private List<VolumeVariationDTO> volumeVariation;
 
     public String getCategoryName() {
-        return category.getName();
+        return category;
     }
 }
