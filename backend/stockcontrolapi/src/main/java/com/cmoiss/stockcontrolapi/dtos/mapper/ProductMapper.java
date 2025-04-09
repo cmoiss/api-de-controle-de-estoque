@@ -1,7 +1,7 @@
 package com.cmoiss.stockcontrolapi.dtos.mapper;
 
-import com.cmoiss.stockcontrolapi.dtos.request.ProductDTO;
-import com.cmoiss.stockcontrolapi.dtos.request.VolumeVariationDTO;
+import com.cmoiss.stockcontrolapi.dtos.request.ProductRequestDTO;
+import com.cmoiss.stockcontrolapi.dtos.request.VolumeVariationRequestDTO;
 import com.cmoiss.stockcontrolapi.dtos.response.ProductResponseDTO;
 import com.cmoiss.stockcontrolapi.dtos.response.VolumeVariationResponseDTO;
 import com.cmoiss.stockcontrolapi.models.*;
@@ -13,21 +13,21 @@ import java.util.stream.Collectors;
 @Component
 public class ProductMapper {
 
-    private VolumeVariation toVolumeVariation(VolumeVariationDTO dto) {
+    private VolumeVariation toVolumeVariation(VolumeVariationRequestDTO dto) {
         return new VolumeVariation(
-                new Volumes(dto.getVolume()),
-                new Price(dto.getPrice()),
-                dto.getQuantity()
+                new Volumes(dto.volume()),
+                new Price(dto.price()),
+                dto.internalQuantity()
         );
     }
 
-    public Product toEntity(ProductDTO dto) {
-        List<VolumeVariation> variations = dto.getVolumeVariation().stream()
+    public Product toEntity(ProductRequestDTO dto) {
+        List<VolumeVariation> variations = dto.volumeVariations().stream()
                 .map(this::toVolumeVariation)
-                .collect(Collectors.toList());
+                .toList();
 
         return new Product(
-                dto.getName(),
+                dto.name(),
                 new Category(dto.getCategoryName()),
                 variations
         );

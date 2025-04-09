@@ -1,12 +1,11 @@
 package com.cmoiss.stockcontrolapi.controller;
 
 import com.cmoiss.stockcontrolapi.dtos.mapper.ProductMapper;
-import com.cmoiss.stockcontrolapi.dtos.request.ProductDTO;
+import com.cmoiss.stockcontrolapi.dtos.request.ProductRequestDTO;
 import com.cmoiss.stockcontrolapi.dtos.response.ProductResponseDTO;
 import com.cmoiss.stockcontrolapi.models.Product;
 import com.cmoiss.stockcontrolapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,8 +43,8 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductDTO productDTO) {
-        Product product = productMapper.toEntity(productDTO);
+    public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
+        Product product = productMapper.toEntity(productRequestDTO);
         service.save(product);
         return ResponseEntity.status(CREATED).body(productMapper.toResponseDTO(product));
     }

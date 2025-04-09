@@ -14,16 +14,16 @@ public class VolumesService {
     private VolumesRepository volumesRepository;
 
     public Product findOrCreateNewVolume(Product product) {
-        // Em cada volumeVariation, verifica se o volume já existe no banco de dados
+        // Em cada volumeVariations, verifica se o volume já existe no banco de dados
         product.getVolumeVariation()
                 .forEach(volumeVariation -> {
                             Volumes volume = volumeVariation.getVolumeValue();
                             Optional<Volumes> existingVolume = volumesRepository.findByVolume(volume.getVolume());
 
                             existingVolume.ifPresentOrElse(
-                                    // Se existir, atualiza o volumeVariation com o existente
+                                    // Se existir, atualiza o volumeVariations com o existente
                                     volumeVariation::setVolumeValue,
-                                    // Se não existir, salva o novo e atualiza o volumeVariation
+                                    // Se não existir, salva o novo e atualiza o volumeVariations
                                     () -> {
                                         volumeVariation.setVolumeValue(volume);
                                         volumesRepository.save(volume);

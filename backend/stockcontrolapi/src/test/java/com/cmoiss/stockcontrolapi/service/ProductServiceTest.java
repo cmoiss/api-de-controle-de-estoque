@@ -35,21 +35,16 @@ class ProductServiceTest {
         return Stream.of(
                 new Product("Coca cola", new Category("Refrigerante"), List.of(
                         new VolumeVariation(new Volumes(350.0), new Price(new BigDecimal("6.99")), 5),
-                        new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("8.99")), 10)
-                )),
+                        new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("8.99")), 10))),
                 new Product("Heineken", new Category("Cerveja"), List.of(
                         new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("11.99")), 5),
-                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")), 10)
-                )),
+                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")), 10))),
                 new Product("Skol", new Category("Cerveja"), List.of(
                         new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("11.99")), 5),
-                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")), 10)
-                )),
+                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")), 10))),
                 new Product("Vinho tinto", new Category("Vinho"), List.of(
                         new VolumeVariation(new Volumes(750.0), new Price(new BigDecimal("29.99")), 12),
-                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("39.99")), 8)
-                ))
-        );
+                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("39.99")), 8))));
     }
 
     private void configureCommonSaveStubs(Product product) {
