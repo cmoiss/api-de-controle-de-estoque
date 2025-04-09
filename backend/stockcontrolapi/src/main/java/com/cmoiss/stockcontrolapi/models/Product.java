@@ -15,6 +15,7 @@ import static org.hibernate.annotations.CascadeType.PERSIST;
 @Entity
 @Table(name = "products")
 public class Product {
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

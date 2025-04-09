@@ -29,4 +29,12 @@ public class VolumeVariation {
     @NonNull
     @Column(name = "quantity_in_internal_stock" , nullable = false)
     private Integer quantityInInventory;
+
+    public Double getVolume() {
+        return volumeValue.getVolume();
+    }
+
+    public Double getPrice() {
+        return price.getPrice().doubleValue();
+    }
 }
