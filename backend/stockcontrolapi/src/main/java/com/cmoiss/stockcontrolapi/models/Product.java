@@ -10,7 +10,6 @@ import java.util.List;
 import static org.hibernate.annotations.CascadeType.PERSIST;
 
 @NoArgsConstructor
-@Getter
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -20,6 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @Getter
     @Setter
     @Column(nullable = false, unique = true)
     private String name;
@@ -30,6 +30,7 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @Getter
     @OneToMany
     @Cascade(PERSIST)
     @JoinColumn(name = "product_id", nullable = false)
@@ -40,5 +41,9 @@ public class Product {
         this.name = name;
         this.category = category;
         this.volumeVariation = volumeVariation;
+    }
+
+    public String getCategoryName() {
+        return category.getName();
     }
 }

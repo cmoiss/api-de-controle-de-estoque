@@ -16,6 +16,9 @@ public class ProductService {
     private ProductRepository repository;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private VolumesService volumesService;
 
     public Product save(Product product) {
@@ -24,6 +27,7 @@ public class ProductService {
             throw new IllegalArgumentException("Já existe um produto com este nome.");
         }
 
+        product = categoryService.findOrCreateNewCategory(product);
         product = volumesService.findOrCreateNewVolume(product);
 
         return repository.save(product);
