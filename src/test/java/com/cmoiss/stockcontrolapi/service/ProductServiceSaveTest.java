@@ -10,15 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
-import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class ProductServiceTest {
+class ProductServiceSaveTest {
     @Mock
     ProductRepository repository;
 
@@ -146,13 +144,5 @@ class ProductServiceTest {
 
         // Verifica que o método save nunca foi chamado
         verify(repository, never()).save(any());
-    }
-
-    @Test
-    void getAll() {
-    }
-
-    @Test
-    void deleteById() {
     }
 }

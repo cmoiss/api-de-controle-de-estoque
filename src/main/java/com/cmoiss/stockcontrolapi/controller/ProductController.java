@@ -38,8 +38,9 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         service.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/save")
@@ -48,4 +49,6 @@ public class ProductController {
         service.save(product);
         return ResponseEntity.status(CREATED).body(productMapper.toResponseDTO(product));
     }
+
+    
 }

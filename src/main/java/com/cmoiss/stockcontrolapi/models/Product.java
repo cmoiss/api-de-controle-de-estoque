@@ -32,8 +32,7 @@ public class Product {
     private Category category;
 
     @Getter
-    @OneToMany
-    @Cascade(PERSIST)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "product_id", nullable = false)
     private List<VolumeVariation> volumeVariation = new ArrayList<>();
 
