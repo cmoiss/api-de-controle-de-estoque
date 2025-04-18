@@ -21,6 +21,9 @@ public class ProductService {
     @Autowired
     private VolumesService volumesService;
 
+    @Autowired
+    private UnitsPerPackService unitsPerPackService;
+
     public Product save(Product product) {
         // Verifica se já existe um produto com o mesmo nome
         if (repository.existsByName(product.getName())) {
@@ -29,6 +32,7 @@ public class ProductService {
 
         product = categoryService.findOrCreateNewCategory(product);
         product = volumesService.findOrCreateNewVolume(product);
+        product = unitsPerPackService.processUnitsPerPackVariations(product);
 
         return repository.save(product);
     }

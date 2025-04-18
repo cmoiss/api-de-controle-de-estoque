@@ -36,7 +36,6 @@ public class Product {
     @Cascade(PERSIST)
     @JoinColumn(name = "product_id", nullable = false)
     private List<VolumeVariation> volumeVariation = new ArrayList<>();
-//    private UnitPerPackVariation unitPerPackVariation;
 
     public Product(String name, Category category, List<VolumeVariation> volumeVariation) {
         this.name = name;

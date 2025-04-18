@@ -28,28 +28,20 @@ class ProductServiceTest {
     @Mock
     VolumesService volumesService;
 
+    @Mock
+    UnitsPerPackService unitsPerPackService;
+
     @InjectMocks
     ProductService service;
 
     static Stream<Product> productProvider() {
-        return Stream.of(
-                new Product("Coca cola", new Category("Refrigerante"), List.of(
-                        new VolumeVariation(new Volumes(350.0), new Price(new BigDecimal("6.99")), 5),
-                        new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("8.99")), 10))),
-                new Product("Heineken", new Category("Cerveja"), List.of(
-                        new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("11.99")), 5),
-                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")), 10))),
-                new Product("Skol", new Category("Cerveja"), List.of(
-                        new VolumeVariation(new Volumes(500.0), new Price(new BigDecimal("11.99")), 5),
-                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("15.99")), 10))),
-                new Product("Vinho tinto", new Category("Vinho"), List.of(
-                        new VolumeVariation(new Volumes(750.0), new Price(new BigDecimal("29.99")), 12),
-                        new VolumeVariation(new Volumes(1000.0), new Price(new BigDecimal("39.99")), 8))));
+        return ProductProvider.productProvider();
     }
 
     private void configureCommonSaveStubs(Product product) {
         when(categoryService.findOrCreateNewCategory(product)).thenReturn(product);
         when(volumesService.findOrCreateNewVolume(product)).thenReturn(product);
+        when(unitsPerPackService.processUnitsPerPackVariations(product)).thenReturn(product);
         when(repository.save(product)).thenReturn(product);
     }
 
@@ -105,6 +97,22 @@ class ProductServiceTest {
         Volumes product2VariationWith500 = p2.getVolumeVariation().getFirst().getVolumeValue();
 
         assertEquals(product1VariationWith500, product2VariationWith500);
+    }
+
+    @Test
+    void testaTentaTivaDePersistenciaDeUnicoProdutoComUnitPerPackDuplicado() {
+        Product p1 = productProvider().toList().getFirst();
+
+        configureCommonSaveStubs(p1);
+
+        service.save(p1);
+
+        verify(repository, times(1)).save(p1);
+
+        UnitsPerPack u1 = p1.getVolumeVariation().getFirst().getUnitsPerPackVariations().getFirst().getUnitsPerPack();
+        UnitsPerPack u2 = p1.getVolumeVariation().getLast().getUnitsPerPackVariations().getFirst().getUnitsPerPack();
+
+        assertEquals(u1, u2);
     }
 
     @ParameterizedTest

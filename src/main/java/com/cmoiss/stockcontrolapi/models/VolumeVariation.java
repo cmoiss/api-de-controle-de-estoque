@@ -3,8 +3,10 @@ package com.cmoiss.stockcontrolapi.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @ToString
 @EqualsAndHashCode
@@ -15,20 +17,33 @@ public class VolumeVariation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @NonNull
     @Setter
     @ManyToOne
     @JoinColumn(name = "volume_value", nullable = false)
     private Volumes volumeValue;
 
-    @NonNull
     @Embedded
     @Column(nullable = false)
     private Price price;
 
-    @NonNull
-    @Column(name = "quantity_in_internal_stock" , nullable = false)
+    @Column(name = "quantity_in_internal_stock", nullable = false)
     private Integer quantityInInventory;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "volume_variation_id")
+    private List<UnitsPerPackVariation> unitsPerPackVariations = new ArrayList<>();
+
+    public VolumeVariation(Volumes volumeValue, Price price, Integer quantityInInventory) {
+        this.volumeValue = volumeValue;
+        this.price = price;
+        this.quantityInInventory = quantityInInventory;
+    }
+
+    public VolumeVariation(Volumes volumeValue, Price price, Integer quantityInInventory, List<UnitsPerPackVariation> unitsPerPackVariations) {
+        this(volumeValue, price, quantityInInventory);
+        this.unitsPerPackVariations = unitsPerPackVariations;
+    }
 
     public Double getVolume() {
         return volumeValue.getVolume();
