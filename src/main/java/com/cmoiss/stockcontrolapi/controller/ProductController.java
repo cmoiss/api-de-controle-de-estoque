@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5178")
 @RestController
 @RequestMapping("/products")
 public class ProductController {
